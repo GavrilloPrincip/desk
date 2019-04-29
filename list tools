@@ -1,1 +1,92 @@
-print(emre)
+---functions of list---
+
+--> 1-)You can change items without functions :
+  
+  fruits=["apple","orange",banana","strawberry"]
+  fruits[2]="pear" 
+  print(fruits)
+  this process show that ["apple","orange","pear","strawberry"]
+
+--> 2-)You can add items with 3 different ways :
+    
+       first way = you don't have to use function:
+       
+         skills=["listening","speaking","grammar"]
+         skills + ["vocabulary","writing"]
+         print(skills)
+         this process show that ["listening","speaking","grammar","vocabulary","writing"]
+    
+        second way = you can use function which is append :
+        
+          brands=["pazar","defacto",lcwaiki"]
+          brands.append["koton"]
+          print(brands)
+          this show that ["pazar","defacto","lcwaiki","koton"]
+
+        third way = you can use function which is insert :
+   
+          >>!!! this function have to have two arguments first argument is index number , second argument is item.
+          list = ["book","novel"]
+          you want list to show that ["book","poem","novel"] so you know index number.
+          so you can do this => list.insert(1,"poem")
+
+--> 3-) how do you know length of list for this question there is a funtion whic is len() in py.
+  
+  numbers=[1,2,3,4,5,6,7,8,9,0]
+  len(number)
+  this method show 10 
+  
+  there is a one more way which more complicated for this question :
+       
+       i=0
+       for i in numbers:
+        i+=1
+       print(i)
+
+--> 4-) this function about insert because you have to use index number but how do you know index number of any item ? İNDEX()
+  
+  kitchen = ["oven","fridge","plate","knife"]
+  x = kitchen.index("fridge")
+  print(x)
+  if we do this process we will see 1.
+  
+--> 5-) sometimes item is more than one in the list so we have to know that how many times repeat this item ? COUNT() 
+  
+  numbers = [1,2,3,1,6,1,1]
+  x = numbers.count(1)
+  
+--> 6-) REMOVE() we us this for remove items from the list.
+  
+  clothes = ["jean","shirt","jumper"]
+  clothes.remove("shirt")
+  print(clothes) this process show ["jean","jumper"] ( shirt was deleted in clothes )
+  
+--> 7-) you use function ,which sort(), to sort items :) :
+  
+  numbers = [3,2,1,5,8,7,6]
+  number.sort()
+  print(numbers)
+  --> [1,2,3,4,5,6,7,8]
+
+--> 8-) last function about list is reserve we can do it with 2 different ways :
+  
+  users = ["emre","yusuf","mustafa"]
+  
+  first way : use reserve() :
+    
+    users.serve() --> ["mustafa","yusuf","emre"]
+  
+  second way : use [::-1] :
+     
+    for example : emre[::-1] --> "erme" so you can do this: 
+    changed_list = list[::-1]
+    print(changed_list)
+    
+==============================================FINISH===============================================
+   
+
+  
+       
+  
+       
+ 
