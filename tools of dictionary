@@ -1,0 +1,36 @@
+DİCTİONARY
+
+translate = {"apple":"elma","pen":"kalem","mirror":"ayna"}
+
+we can't use index to access items 
+
+translate[1] ==> WRONG!! (but we can do it in list --> fruits = ["apple","strawberry","lemon"] --> fruits[2] --> "lemon"
+so how can we reach items ? 
+
+print(translate["apple"]) ==> "elma" 
+
+***********************************************************************************
+functions : 
+
+1--) keys():
+
+x = translate.keys() ---> ["apple","pen","mirror"]
+--------------------------------------------------------------------
+2--)values()
+
+x = translate.values() ---> ["elma","kalem","ayna"]
+--------------------------------------------------------------------
+3--)items()
+
+x = translate.items() ---> [("apple","elma"),("pen","kalem"),("mirror","ayna")]
+
+***********************************************************************************
+
+ways of add new item :
+
+1-) translate.update({"phone":"telefon")
+
+2-) translate["phone"] = "telefon"
+if there is not this item in this dictionary, this way adds item easier.
+
+***********************************************************************************
