@@ -1,0 +1,75 @@
+1--)replace():
+
+emre.replace("e","A")==> AmrA
+tatava.replace("a","E")==>tEtEvE
+
+-----------------------------------------
+
+2--)split():
+
+x = "emre demir"
+y = x.split() # we didn't use item but this means " "
+print(type(y))==>list
+print(y)==>["emre","demir"]
+
+x = "emre,demir"
+y = x.split(",")
+print(y)==>["emre","demir"]
+
+-----------------------------------------
+
+3--)lower() x upper()
+
+x = "aBcD"
+y = x.lower()
+print(y)==> abcd
+z = x.upper()
+print(z)==> ABCD
+
+-----------------------------------------
+
+4--)islower() x isupper()  >>QUERY
+
+x="abcd"
+y = x.islower()
+print(y)==>True
+
+-----------------------------------------
+
+5--)endswith() x starswith()
+
+x = "music.mp3"
+y = x.endswith("mp3")
+print(y) ==> True
+
+-----------------------------------------
+
+6--)strip() // lstrip() // rstrip()
+
+x = "emre"
+y = x.strip("e")
+print(y) ==> "mr"
+
+-----------------------------------------
+
+7--)join() opposite split()
+
+list = ["Mustafa","Kemal","Atatürk"]
+x = " ".join(list)
+print(x) ==> Mustafa Kemal Atatürk
+
+-----------------------------------------
+
+8--) str.maketrans()  & translate() 
+
+alfabe = "abcçdefgğhıijklmnoçprsştuüvyzqxw"
+new_alfabe = "çömnbvcxzişlkjhgfdsaqwertyuıopğü"
+
+değişim = str.maketrans(alfabe,new_alfabe)
+
+x = "şifreli konuşma uygulaması !!"
+
+print(x.translate(değişim)) ==> elcqvhl jdftegç tıxthçgçwş !!
+
+
+
