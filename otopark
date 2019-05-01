@@ -1,0 +1,154 @@
+import locale
+
+import datetime
+
+import random
+
+import sqlite3
+
+locale.setlocale(locale.LC_ALL, '')
+
+
+class otopark():
+
+    def __init__(self):
+        self.vt =sqlite3.connect("otopark.db")
+        self.imlec = self.vt.cursor()
+        self.imlec.execute("CREATE TABLE IF NOT EXISTS 'otopark' ('yer' TEXT ,'start_time' ,'numara' TEXT ,'plaka')")
+        self.vt.commit()
+
+
+
+    def new_car(self):
+        new_plaka = input("aracınızın plakasını giriniz:")
+        if new_plaka in otopark1.cars_plaka():
+            print("Aracınızın zaten otoparkta !!!")
+        else:
+            i=1
+            while True:
+                if i in otopark1.dolu_yerler() and i<6:
+                    print(i,"numaralı peron dolu")
+                elif not i in otopark1.dolu_yerler() and i<6:
+                    print(i,"numaralı perona geçiniz")
+                    new_yer = i
+                    break
+                else:
+                    print("otopark şuanda dolu !")
+                    exit()
+                i+=1
+
+
+            while True:
+                new_number = random.randint(100,900)
+                if not new_number in otopark1.cars_number():
+                    break
+            new_time = datetime.datetime.now()
+            self.imlec.execute("insert into 'otopark' values (?,?,?,?)",(new_yer,new_time,new_number,new_plaka))
+            self.vt.commit()
+            print("fiş numaranız:",new_number,"giriş saatiniz:",new_time)
+
+
+
+    def cars_plaka(self):
+        self.plakalar=[]
+        self.imlec.execute("select plaka from 'otopark'")
+        liste= self.imlec.fetchall()
+        sil = ["(", ")", ",", "'"]
+        for i in liste:
+            i = str(i)
+            for j in sil:
+                i =i.replace(j,"")
+            self.plakalar.append(i)
+        return self.plakalar
+
+
+
+    def cars_number(self):
+        self.numaralar =[]
+        self.imlec.execute("select numara from 'otopark'")
+        liste = self.imlec.fetchall()
+        sil = ["(",")",",","'"," "]
+        for i in liste:
+            i = str(i)
+            for j in sil:
+                i = i.replace(j,"")
+            i = int(i)
+            self.numaralar.append(i)
+        return self.numaralar
+
+
+
+    def dolu_yerler(self):
+        self.yerler =[]
+        self.imlec.execute("select yer from 'otopark' ")
+        liste = self.imlec.fetchall()
+        sil = ["(",")",",","'"]
+        for i in liste:
+            i = str(i)
+            for j in sil:
+                i = i.replace(j,"")
+            i = int(i)
+            self.yerler.append(i)
+
+        return self.yerler
+
+    def çıkış_ücret(self):
+        num_control = input("fiş numaranızı giriniz:")
+        if int(num_control) in otopark1.cars_number():
+            self.imlec.execute("select start_time from 'otopark' where numara = ?",(int(num_control),))
+            başlangıç = self.imlec.fetchall()[0][0]
+            başlangıç = datetime.datetime(int(başlangıç[0:4]),int(başlangıç[5:7]),int(başlangıç[8:10]),int(başlangıç[11:13]),int(başlangıç[14:16]))
+            süre =datetime.datetime.now()-başlangıç
+            süre = süre.seconds
+            dakika = süre // 60
+            saniye = süre % 60
+            saat = dakika // 60
+            dakika = dakika % 60
+            print(saat,"saat/",dakika,"dakika/",saniye,"saniyedir aracınız otoparkda")
+
+            if 1>=saat:
+                ücret = 10
+            elif saat ==2:
+                ücret = 20
+            elif saat==3:
+                ücret =30
+            elif saat>3:
+                ücret = 30+5*(saat-3)
+            print("ücretiniz:",ücret,"turk liras.")
+            self.imlec.execute("delete from otopark where numara=?",(num_control,))
+            print("İYİ GÜNLER DİLERİZ")
+
+        else:
+            print("Numaranızı kontrol ediniz!")
+        self.vt.commit()
+
+otopark1 = otopark()
+
+print("""===================OTOPARK PROGRAMI===================
+             0-2 saat 10tl
+             2-3 saat 20tl
+             3-4 saat 30tl
+             sonraki saat başı +5 tl eklenir.
+=======================================================
+             >>araç eklemek için = 1
+             >>aracınızı çıkarmak için = 2
+             >>plaka yer listesi için = 3
+             >>çıkmak için = q
+=======================================================""")
+
+
+while True:
+    işlem = (input("işleminizi giriniz:"))
+    if işlem == "1":
+        otopark1.new_car()
+        break
+    elif işlem =="2":
+        otopark1.çıkış_ücret()
+        break
+    elif işlem =="3":
+        for i,j in otopark1.cars_plaka(),otopark1.dolu_yerler():
+            print(i,"plakalı araç",j,"numaralı peronda")
+    elif işlem == "q":
+        print("İyi Günler")
+    else:
+        print("geçersiz işlem ")
