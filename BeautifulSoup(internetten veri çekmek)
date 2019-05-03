@@ -36,3 +36,33 @@ for i in ayıkla:
     i=i.split("       ")
     print(i[2])
     print("*************************")
+
+-------------------------------------------------------------------
+import requests
+
+from bs4 import BeautifulSoup
+
+url = "https://www.imdb.com/chart/top"
+
+r = requests.get(url)
+içerik = r.content
+soup = BeautifulSoup(içerik,"html.parser")
+
+ayıkla = soup.find_all("td",attrs={"class":"titleColumn"})
+ayıkla2 = soup.find_all("td",attrs={"class":"ratingColumn imdbRating"})
+filmler =[]
+a = 0
+for i in ayıkla:
+    i = i.text
+    i=i.replace("\n"," ")
+    i = i.split("       ")
+    j = ayıkla2[a]
+    j=j.text
+    j=j.replace("\n"," ")
+    i.append(j)
+    filmler.append(i)
+    a+=1
+kriter = float(input("kriteriniz:"))
+for i in filmler:
+    if kriter < float(i[3]):
+        print("{} imdn:{}".format(i[2],i[3]))
