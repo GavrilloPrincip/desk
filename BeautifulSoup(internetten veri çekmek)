@@ -9,11 +9,11 @@ içerik = r.content #siteyi okunur hale getirdik.
 
 soup = BeautifulSoup(içerik,"html.parser") #BeautifulSoup modulüyle siteyi parçalıcağımızı söyledik "html.parser"
 
-ayıkla = soup.fin_all("a",attrs={"class":"emre"} #istediğimiz yazıları verileri aldık <a href="" class="emre"></a> satırlarını aldık.
+ayıkla = soup.find_all("a",attrs={"class":"emre"} #istediğimiz yazıları verileri aldık <a href="" class="emre"></a> satırlarını aldık.
 
 for i in ayıkla: #daha okunaklı gözükmesi için for döngüsüyle bastırıyoruz.
-  print(i.text) ==> <a>.....</a>   .... kısmını verir.
-  print(i.get("href") ==> a href="....." ..... kısmını kısaca link bağlantısını verir.
+  print(i.text) # ==> <a>.....</a>   .... kısmını verir.
+  print(i.get("href")) # ==> a href="....." ..... kısmını kısaca link bağlantısını verir.
   
  ------------------------------------------------------------------------------------------------------- 
  
