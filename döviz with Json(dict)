@@ -1,0 +1,32 @@
+import requests
+
+url = "https://api.exchangeratesapi.io/latest?base="
+para_birimleri=['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTC', 'BTN', 'BWP', 'BYN', 'BYR', 'BZD', 'CAD', 'CDF', 'CHF', 'CLF', 'CLP', 'CNY', 'COP', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'GBP', 'GEL', 'GGP', 'GHS', 'GIP', 'GMD', 'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'IMP', 'INR', 'IQD', 'IRR', 'ISK', 'JEP', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KMF', 'KPW', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP', 'LKR', 'LRD', 'LSL', 'LTL', 'LVL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRO', 'MUR', 'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'STD', 'SVC', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 'UYU', 'UZS', 'VEF', 'VND', 'VUV', 'WST', 'XAF', 'XAG', 'XAU', 'XCD', 'XDR', 'XOF', 'XPF', 'YER', 'ZAR', 'ZMK', 'ZMW', 'ZWL']
+r = requests.get(url)
+içerik = r.json()
+print("===============DÖVİZ ÇEVİRME UYGULAMASI===============")
+while True:
+    cins = input("Mevcut döviz cinsini giriniz:")
+    if cins == "q":
+        break
+    else:
+        cins = cins.upper()
+        yeni_cins = input("Dönüştürilecek döviz cinsini giriniz:")
+        yeni_cins = yeni_cins.upper()
+        if (not cins in para_birimleri) or (not yeni_cins in para_birimleri):
+            print("DÖVİZ CİNSLERİNİ DOĞRU GİRDİĞİNİZDEN EMİN OLUNUZ !!")
+            print("MEVCUT PARA BİRİMLERİ:")
+            print("===============================================")
+            for i in para_birimleri:
+                if (para_birimleri.index(i)+1)%5==0:
+                    print(i)
+                else:
+                    print(i,end="  ")
+                if para_birimleri.index(i)+1==len(para_birimleri):
+                    print("Tekrar Giriniz","\n")
+            print("===============================================","\n")
+        else:
+            cins_tutar = float(input("döviz tutarınız:"))
+            yeni_cins_tutar = cins_tutar*içerik["rates"][yeni_cins]
+            print("{} {}'i  ==> {} cinsi {} dövize dönüştürülmüştür.".format(cins_tutar,cins,yeni_cins,yeni_cins_tutar))
+            print("yeni işlem'e dönülüyor çıkmak için döviz cinsine q giriniz..")
