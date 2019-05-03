@@ -1,0 +1,38 @@
+import requests #step1
+from bs4 import BeautifulSoup #step2 modülleri dahil ettik
+
+url = "https://www.imdb.com/chart/top" #veri alacağımız site.
+
+r = requests.get(url) #siteyi r değişkenine aldık.
+
+içerik = r.content #siteyi okunur hale getirdik.
+
+soup = BeautifulSoup(içerik,"html.parser") #BeautifulSoup modulüyle siteyi parçalıcağımızı söyledik "html.parser"
+
+ayıkla = soup.fin_all("a",attrs={"class":"emre"} #istediğimiz yazıları verileri aldık <a href="" class="emre"></a> satırlarını aldık.
+
+for i in ayıkla: #daha okunaklı gözükmesi için for döngüsüyle bastırıyoruz.
+  print(i.text) ==> <a>.....</a>   .... kısmını verir.
+  print(i.get("href") ==> a href="....." ..... kısmını kısaca link bağlantısını verir.
+  
+ ------------------------------------------------------------------------------------------------------- 
+ 
+ example:
+  
+  import requests
+
+from bs4 import BeautifulSoup
+
+url = "https://www.imdb.com/chart/top"
+
+r = requests.get(url)
+içerik = r.content
+soup = BeautifulSoup(içerik,"html.parser")
+
+ayıkla = soup.find_all("td",attrs={"class":"titleColumn"})
+
+for i in ayıkla:
+    i=i.text.replace("\n"," ")
+    i=i.split("       ")
+    print(i[2])
+    print("*************************")
