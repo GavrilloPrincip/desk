@@ -1,0 +1,120 @@
+import datetime
+import random
+import sqlite3
+import locale
+
+locale.setlocale(locale.LC_ALL, '')
+
+class hotel():
+
+    def __init__(self):
+        self.vt = sqlite3.connect("hotel.db")
+        self.imlec = self.vt.cursor()
+        self.imlec.execute("CREATE TABLE IF NOT EXISTS 'hotel' ('room_number' TEXT,'tc' TEXT,'entry_time')")
+        self.vt.commit()
+
+
+
+    def check_in(self):
+        while True:
+            ad = input("adınız:")
+            soyad = input("soyadınız:")
+            self.new_tc = input("TC kimlik numaranızı giriniz:")
+            if not len(self.new_tc) == 11:
+                print("tc numaranızı doğru girdiğinizden emin olunuz!")
+            elif self.new_tc in hotel1.kişiler():
+                print("zaten üzerinize kayıtlı bir oda var!")
+            else:
+                while True:
+                    new_room = random.randint(1,301)
+                    if new_room in hotel1.odalar():
+                        True
+
+                    else:
+
+                        now = datetime.datetime.now()
+                        self.imlec.execute("INSERT INTO 'hotel' values(?,?,?)",(new_room,self.new_tc,now))
+                        print("{} TC numaralı {} {} isimli misafirimiz {} numaralı odaya geçiniz.".format(self.new_tc,ad,soyad,new_room))
+                        print("giriş zamanı :",datetime.datetime.strftime(datetime.datetime.now(),'%c'))
+                        self.vt.commit()
+                        break
+                break
+
+    def kişiler(self):
+        self.tcs = list()
+        self.imlec.execute("select tc from 'hotel'")
+        liste = self.imlec.fetchall()
+        sil = ["(", ")", ",", "'", " "]
+        for i in liste:
+            i = str(i)
+            for j in sil:
+                i = i.replace(j, "")
+            self.tcs.append(i)
+        return self.tcs
+
+    def odalar2(self):
+        full = len(hotel1.odalar())
+        empty = 300-full
+        print("{} tane boş {} tane dolu odamız mevcuttür.".format(empty,full))
+
+    def odalar(self):
+        self.rooms = list()
+        self.imlec.execute("select room_number from 'hotel'")
+        liste = self.imlec.fetchall()
+        sil = ["(", ")", ",", "'", " "]
+        for i in liste:
+            i = str(i)
+            for j in sil:
+                i = i.replace(j, "")
+            self.rooms.append(i)
+        return self.rooms
+
+    def ücret(self,gün):
+        if gün ==0:
+            ücret = 100
+        elif gün < 30 :
+            ücret = gün*60
+        elif gün >=30:
+            ücret = gün*50
+        return ücret
+
+    def check_out(self):
+        while True:
+            sil_tc = input("TC kimlik numaranızı giriniz:")
+            if not sil_tc in hotel1.kişiler():
+                print("tc nizi kontrol ediniz!")
+            else:
+                self.imlec.execute("select entry_time from 'hotel' where tc = ?",(sil_tc,))
+                başlangıç = self.imlec.fetchall()[0][0]
+                başlangıç = datetime.datetime(int(başlangıç[0:4]),int(başlangıç[5:7]),int(başlangıç[8:10]),int(başlangıç[11:13]),int(başlangıç[14:16]))
+                süre = datetime.datetime.now()-başlangıç
+                süre = süre.seconds
+                dakika = süre // 60
+                saat = dakika // 60
+                dakika = dakika % 60
+                gün = saat // 24
+                saat = saat % 24
+                print("{} gün {} saat {} dakikadır odanızda bulunuyorsunuz.".format(gün,saat,dakika))
+                print("ücretiniz {} ".format(hotel1.ücret(gün)))
+                self.imlec.execute("delete from 'hotel' where tc=?", (sil_tc,))
+                self.vt.commit()
+                break
+
+
+
+
+hotel1=hotel()
+
+while True:
+    işlem = int(input("işlem seçin:"))
+    if işlem == 1:
+        hotel1.check_in()
+    elif işlem == 2:
+        hotel1.check_out()
+    elif işlem == 3:
+        hotel1.odalar2()
+    elif işlem == 0:
+        print("iyi günler..")
+        exit()
+    else:
+        print("Lütfen geçerli bir işlem numarası seçiniz!")
